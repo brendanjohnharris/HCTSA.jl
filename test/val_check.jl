@@ -83,7 +83,7 @@ begin # * Time feature by feature
     xpy = HCTSA.as_numpy(x)
 
     valtimes = map(enumerate(anames[1:1000])) do (i, aname)
-        @info "Timing feature $i / $(length(anames))"
+        # @info "Timing feature $i / $(length(anames))"
 
         begin # * time Julia
             aval, ta = @timed ops[i](x)
