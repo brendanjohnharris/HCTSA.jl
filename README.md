@@ -35,7 +35,7 @@ Y = ops(X)
 HCTSA uses [MoreMaps.jl](https://github.com/brendanjohnharris/MoreMaps.jl) charts for parallel execution.
 
 > [!WARNING]
-> Threaded execution is currently unavailable due to pyhctsa's use of Python's global interpreter lock (GIL). Parallel execution works best through the `Pmap()` backend.
+> Threaded execution is currently unavailable due to Python's global interpreter lock (GIL). Parallel execution works best through the `Pmap()` backend.
 
 ```julia
 using HCTSA
