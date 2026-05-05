@@ -66,6 +66,7 @@ Q = map(enumerate(anames)) do (i, fname)
     return q
 end
 @testset "val_check julia vs pyhctsa agreement" begin
+    using Statistics
     @test length(Q) == length(anames)
     # Some features can diverge due to tiny z-score differences amplified downstream.
     @test mean(Q) >= 0.95

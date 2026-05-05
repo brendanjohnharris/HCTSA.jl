@@ -15,4 +15,5 @@ TestItems = "1c621080-faea-4a02-84b6-bbd5e436b8fe"
 TimeseriesFeatures = "f3112013-b923-4dfa-b867-8806c885f823"
 
 [sources]
-TimeseriesFeatures = {rev = "main", url = "https://github.com/brendanjohnharris/TimeseriesFeatures.jl"}
+TimeseriesFeatures = {url = "https://github.com/brendanjohnharris/TimeseriesFeatures.jl", rev="main"}
+MoreMaps = {url = "https://github.com/brendanjohnharris/MoreMaps.jl", rev="main"}
