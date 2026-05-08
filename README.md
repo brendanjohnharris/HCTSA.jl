@@ -16,23 +16,24 @@ To enable java-dependent features, set the environment variable `JULIA_COPY_STAC
 ```julia
 using HCTSA
 
-# Build operation set from pyhctsa config
-ops = HCTSA.build_ops()
-
 # Single time series
 x = randn(200)
-y = ops(x)
+y = hctsa(x)
 
 # Multiple time series in columns
 X = randn(200, 8)
-Y = ops(X)
+Y = hctsa(X)
+
+# Or select features
+ops = hctsa[[:ac_1, :ac_2]]
+A = ac(X)
 ```
 
 
 ## Advanced usage
 
 ### Parallel computation
-HCTSA uses [MoreMaps.jl](https://github.com/brendanjohnharris/MoreMaps.jl) charts for parallel execution.
+HCTSA uses [MoreMaps.jl](https://github.com/brendanjohnharris/MoreMaps.jl) charts for parallel execution. `MoreMaps.QualityLogger()` is useful for tracking the proportion of good features across time series.
 
 > [!WARNING]
 > Threaded execution is currently unavailable due to Python's global interpreter lock (GIL). Parallel execution works best through the `Pmap()` backend.
@@ -42,19 +43,19 @@ using HCTSA
 using MoreMaps
 using Distributed
 
-# Start workers, then load packages on all workers.
+# Load required packages on all workers
 addprocs(4)
-@everywhere using HCTSA, MoreMaps, UNicodePlots
+@everywhere using HCTSA, MoreMaps
 
-ops = HCTSA.build_ops()
-X = randn(2000, 16)
-
-# Parallel map across time series using a pmap chart.
-Y = ops(X; chart = Chart(Pmap()))
+X = randn(100, 20)
+Y = hctsa(X; chart = Chart(Pmap(), QualityLogger())) # Takes a few seconds each iter.
 ```
 
+
 ### Debug logging
-Enable HCTSA debug logs in the current Julia session with `ENV["JULIA_DEBUG"] = "HCTSA"`
+Enable HCTSA debug logs in the current Julia session with `ENV["JULIA_DEBUG"] = "HCTSA"`; this will show errors in feature computation.
+To view warnings from pyhctsa, set `ENV["PYTHON_LOG_LEVEL"] = "1"` before launching Julia (or set the `python_log_level` preference).
+
 
 
 ## Core API
